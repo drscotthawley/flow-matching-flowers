@@ -38,9 +38,29 @@ See WandB pages for different resolutions:
 
 * 32x32 (easy): https://wandb.ai/drscotthawley/TadaoY-flowers-32x32?nw=nwuserdrscotthawley
 * 64x64 (also pretty easy): https://wandb.ai/drscotthawley/TadaoY-flowers-64x64?nw=nwuserdrscotthawley
-* 128x128 (??? hard: converges super-slowly, numerical instabilities): https://wandb.ai/drscotthawley/TadaoY-flowers-128x128?nw=nwuserdrscotthawley
+* 128x128 (??? hard: converges super-slowly, numerical instabilities, pictures look bad): https://wandb.ai/drscotthawley/TadaoY-flowers-128x128?nw=nwuserdrscotthawley
+  * Adding weight decay slows loss but doesn't prevent instabilities.
+  * EMA weights may help. TODO. 
+  * Combining K&Q embeddings as per Stable Diffusion 3 could help with instability. TODO. 
+
+
+# Scaling Beyond 64x64?
 
 Re. scaling up, alternate ideas are possible:
 
-1. working in some kind of VAE space like the [flowers-vqgan](https://github.com/drscotthawley/vqgan-shh) I made last fall could help with resolution, but... actually I was having trouble doing that with another dataset (128x128x3 images compressed to 16x16x4 RVQ), so... this is why I'm back to the flowers dataset.)
-2. Doing a multiscale or progressive-multiscale approach ala Google's ImageGen, using the endpoint of a lower-res flow, upscaling it, and training a larger model to predict the difference.  Relatedly, Stable Diffusion 3's base model was 128x128 upon which they trained super-resolution models. 
+1. working in some kind of compressed (VQ-)VAE space like the [flowers-vqgan](https://github.com/drscotthawley/vqgan-shh) I made last fall could help with, but... actually I was having trouble doing that with another dataset (128x128x3 images compressed to 16x16x4 RVQ), so... this is why I'm back to trying the flowers dataset, and with no compression. Trying the VQ thing is next on my list.
+2. Doing a multiscale or progressive-multiscale approach ala Google's ImageGen, using the endpoint of a lower-resolution flow, upscaling it, and training a larger model to predict the difference.  Relatedly, Stable Diffusion 3's base model was 128x128 upon which they trained super-resolution models.  Maybe the key for 128x128 is just to let it train for months? 
+
+# Improving the "rate of training"?
+
+The graph of Loss function vs steps for learning the velocity field tends to flatten out over time, but still the resulting output images look "bad". Presumably this is because tiny errors in the velocity field can integrate to large errors in the generated output, i.e. being off the target data manifold. Even when using fancy integration schemes and many steps. 
+
+There is typically no "reconstruction loss" with flow-matching (or diffusion) models. Trying to include one would mean storing gradients throughout the integration process, which seems infeasible.
+
+How else can we improve the rate at which the model learns to produce good outputs? I've tried two methods, neither of which has helped much. 
+
+1. Trying different interpolation schemes (e.g. "cosine" instead of the standard linear interoplation for flow-matching) can produce "straigher" trajectories but I **haven't observed it making much difference in the outputs.**  (And re. straightening: ReFlow's not appropriate yet because so far our trained endpoints look bad.)
+
+2. Trying to pair the source & target points "intelligently"* instead of random pairing can result in straigter trajectories by eliminating many "incorrect" trajectories, however in my experience these methods, while resulting in lower loss values, don't actually "make much difference", i.e don't improve the integrated output distributions *or even the rate of convergence of independent metrics* as the model trains. 
+
+​    * e.g. via sorting (in 1D) or partitioning space using  indices of vector quantization (in high D). One could imagine other partitioning schemes such as k-means, Locality Sensitive Hashing, Barnes-Hut, etc..  but... so far it hasn't made a difference?
