@@ -3,7 +3,7 @@ An exercise in flow-matching modeling of the Oxford Flowers dataset
 
 This is mostly code adapted by @drscotthawley from [Tadao Yamaoka's CIFAR10 Example](https://tadaoyamaoka.hatenablog.com/entry/2024/10/09/232749). As of now, this repo is purely an academic self-education exercise.
 
-This repo was created to share progress and solicit feedback, advice, comments, etc. for improving such a code. Please use the [Discussions](https://github.com/drscotthawley/flow-matching-flowers/discussions) feature to do so, and thank you! 
+This repo was created to share progress and solicit feedback, advice, comments, etc. for improving such a code for examples beyond 2D dots and tiny images, e.g. I'm having trouble with 128x128 images. Please use the [Discussions](https://github.com/drscotthawley/flow-matching-flowers/discussions) feature to do so, and thank you! 
 
 
 
@@ -28,8 +28,10 @@ This is still  a bit janky (AF) so the code is the documentation.  I mainly made
 
 There are other repo's on GitHub on this topic, e.g. 
 
-*..
-*..
+* https://github.com/851695e35/Flow-Matching-Implementation
+
+* https://github.com/facebookresearch/flow_matching
+
 * https://github.com/YangLing0818/consistency_flow_matching
 
 ...and I may execute and/or run those as needed. Yamaoka's was the first code I found online so I went with that.  
