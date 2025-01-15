@@ -1,8 +1,7 @@
 # flow-matching-flowers
 An exercise in flow-matching modeling of the Oxford Flowers dataset
 
-This is mostly code adapted by @drscotthawley from [Tadao Yamaoka's CIFAR10 Example](https://tadaoyamaoka.hatenablog.com/entry/2024/10/09/232749). As of now, this repo is purely an academic self-education exercise. No LICENSE should be inferred from any of this. I will inquire of Yamaoka what LICENSE he would prefer, if any. 
-(Note also that Yamaoka might not want his name attached to any of this! I did make some modifications but they were minor "quality of life" changes, and un-hard-coding things like # of classes, layer dimensions, adding tqdm and wandb, etc.)
+This is mostly code adapted by @drscotthawley from [Tadao Yamaoka's CIFAR10 Example](https://tadaoyamaoka.hatenablog.com/entry/2024/10/09/232749). As of now, this repo is purely an academic self-education exercise.
 
 # Installation 
 ```bash
