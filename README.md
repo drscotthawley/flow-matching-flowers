@@ -2,6 +2,7 @@
 An exercise in flow-matching modeling of the Oxford Flowers dataset
 
 This is mostly code adapted by @drscotthawley from [Tadao Yamaoka's CIFAR10 Example](https://tadaoyamaoka.hatenablog.com/entry/2024/10/09/232749). As of now, this repo is purely an academic self-education exercise. No LICENSE should be inferred from any of this. I will inquire of Yamaoka what LICENSE he would prefer, if any. 
+(Note also that Yamaoka might not want his name attached to any of this! I did make some modifications but they were minor "quality of life" changes, and un-hard-coding things like # of classes, layer dimensions, adding tqdm and wandb, etc.)
 
 # Installation 
 ```bash
@@ -34,8 +35,10 @@ There are other repo's on GitHub on this topic, e.g.
 
 # Sample Results
 
-See WandB pages: 
+See WandB pages for different resolutions: 
 
-* 32x32: 
-* 64x64: 
-* 128x128: 
+* 32x32 (easy): https://wandb.ai/drscotthawley/TadaoY-flowers-32x32?nw=nwuserdrscotthawley
+* 64x64 (also pretty easy): https://wandb.ai/drscotthawley/TadaoY-flowers-64x64?nw=nwuserdrscotthawley
+* 128x128 (??? hard): https://wandb.ai/drscotthawley/TadaoY-flowers-128x128?nw=nwuserdrscotthawley
+
+Re. scaling up, working in some kind of VAE space like the [flowers-vqgan](https://github.com/drscotthawley/vqgan-shh) I made last fall could help with resolution, but... actually I was having trouble doing that with another dataset (128x128x3 images compressed to 16x16x4 RVQ), so... this is why I'm back to the flowers dataset.)
