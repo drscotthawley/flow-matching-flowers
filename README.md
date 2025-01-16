@@ -47,7 +47,10 @@ See WandB pages for different resolutions:
 * 128x128 (??? hard: converges super-slowly, numerical instabilities, pictures look bad): https://wandb.ai/drscotthawley/TadaoY-flowers-128x128?nw=nwuserdrscotthawley
   * Adding weight decay slows loss but doesn't prevent instabilities.
   * EMA weights may help. TODO. 
-  * Combining K&Q embeddings as per Stable Diffusion 3 could help with instability. TODO. 
+  * Combining K&Q embeddings as per Stable Diffusion 3 could help with instability. TODO.
+
+Insights: 
+
 
 
 # Scaling Beyond 64x64?
@@ -56,6 +59,8 @@ Re. scaling up, alternate ideas are possible:
 
 1. working in some kind of compressed (VQ-)VAE space like the [flowers-vqgan](https://github.com/drscotthawley/vqgan-shh) I made last fall could help with, but... actually I was having trouble doing that with another dataset (128x128x3 images compressed to 16x16x4 RVQ), so... this is why I'm back to trying a more standard dataset (the flowers), and with no compression. (Trying the VQ thing is next on my to-do list though.)
 2. Doing a multiscale or progressive-multiscale approach ala Google's ImageGen, using the endpoint of a lower-resolution flow, upscaling it, and training a larger model to predict the difference.  Relatedly, Stable Diffusion 3's base model was 128x128 upon which they trained super-resolution models.  Maybe the key for 128x128 is just to let it train for months? 
+
+**UPDATE:** Straining in a 32x32x4 latent space, and starting to get some flower-y shapes! https://wandb.ai/drscotthawley/flowers-flow-vq?nw=nwuserdrscotthawley
 
 # Improving the "rate of training"?
 
